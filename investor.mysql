@@ -12,3 +12,4 @@ CREATE TABLE investor (
 );
 
 CREATE INDEX idx_timestamp ON investor (timestamp);
+CREATE INDEX idx_amount ON investor (amount);

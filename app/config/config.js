@@ -3,10 +3,10 @@ module.exports = {
         NAME: "investor",
         HOST: "localhost",
         USER: "root",
-        PASSWORD: "unnati@67"
+        PASSWORD: "<password>"
     },
     API: {
-        KEY: '806c0c21c7262ef9a873b443ce72e8c5403c05e9cfce508b11bdb6afe6b98158',
+        KEY: '<API_KEY>',
         GET_RATE: 'https://min-api.cryptocompare.com/data/price'
     }
 }

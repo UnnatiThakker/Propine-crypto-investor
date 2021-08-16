@@ -36,4 +36,8 @@ Once you have imported data into the system you can query them using below optio
 * `node main.js --date=\`${yyyy-mm-dd}\`` will find portfolio for given date group by tokens
 * *node main.js --token=\`${token_name} \` --date=\`${yyyy-mm-dd}\`* will find portfolio for a given date and token
 
+<img src="https://files.nuclino.com/files/7e4c8d84-1988-4756-b78a-1b3ed6aae95d/flow chart.png"
+     alt="flow chart"
+     style="float: left; margin-right: 10px;" />
+
 ![flow chart.png](https://files.nuclino.com/files/7e4c8d84-1988-4756-b78a-1b3ed6aae95d/flow chart.png)

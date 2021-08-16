@@ -1,7 +1,7 @@
 const args = require('minimist')(process.argv.slice(2))
 const Investor = require("./app/controllers/investor.controller");
 
-
+// if data is already imported then find portfolio
 const portfolio = () => {
     this.token = args['token'];
     this.date = args['date'];
@@ -13,7 +13,7 @@ const portfolio = () => {
         }
     });
 }
-
+// import csv file if args['import'] is present
 const InitialiseData = function() {
     if(args['import']){
         Investor.importToSQL((err, res) => {
@@ -28,8 +28,11 @@ const InitialiseData = function() {
     }
     
 }
+
+// Entry point to the application
 InitialiseData();
 
+// handle unexpected errors/exceptions 
 process
   .on('unhandledRejection', (reason, p) => {
     console.error(reason, 'Unhandled Rejection at Promise', p);

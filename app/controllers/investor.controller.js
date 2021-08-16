@@ -3,13 +3,12 @@ const fetch = require('node-fetch');
 const apiConfig = require('../config/config').API;
 
 // import csv file data
-
 exports.importToSQL = (result) => {
     Investor.importFile("./transactions.csv", (err, res) => {
         result(err, res);
     });
 }
-
+// find portfolio
 exports.findPortfolio = (token, date, result) => {
     if(token && date){
         givenTokenAndDate(token, date, ((err, res) => {
@@ -30,31 +29,30 @@ exports.findPortfolio = (token, date, result) => {
     }
     
 }
-
-givenTokenAndDate = (token, date, result) => {
+// if token & date present to find portfolio
+givenTokenAndDate = (token, date, next) => {
     Investor.findByTokenNDate(token, date, (err, res) => {
         if(err){
-            result(err, res);
-            return;
+            next(err, res);
         } else if(res.portfolio != null){
             getCurrentRate([token], (apiErr, apiRes) => {
-                if(apiRes){
+                if(apiErr){
+                    next(new Error("Error in connecting API"));
+                } else {
                     res.portfolio = res.portfolio * apiRes.USD;
+                    next(null, res);
                 }
-                result(err, res);
             });
         } else {
-            res = 'Matching data not found for given token and date';
-            result(err, res);
+            next(new Error("Matching data not found for given token and date"));
         }
     });
 }
-
+// if token present to find portfolio
 givenToken = (token, result) => {
     Investor.findByToken(token, (err, res) => {
         if(err){
             result(err, res);
-            return;
         } else if(res.portfolio != null){
             getCurrentRate([token], (apiErr, apiRes) => {
                 if(apiRes){
@@ -68,18 +66,16 @@ givenToken = (token, result) => {
         }
     });
 }
-
+// if date present to find portfolio
 givenDate = (date, result) => {
     Investor.findByDate(date, (err, res) => {
         if(err){
             result(err, res);
-            return;
         } else{
             let tokens = res.map((obj) => obj.token);
             getCurrentRate(tokens, (apiErr, apiRes) => {
                 if(apiRes){
                     res = res.map((obj) => {
-                        //    console.log(apiRes)
                             obj.portfolio = obj.portfolio * apiRes[obj.token].USD;
                             return obj;
                         });
@@ -89,12 +85,11 @@ givenDate = (date, result) => {
         }
     });
 }
-
+// if no parameter given to find portfolio
 givenNoParam = (result) => {
     Investor.findPortfolio((err, res) => {
         if(err){
             result(err, res);
-            return;
         } else{
             let tokens = res.map((obj) => obj.token);
             getCurrentRate(tokens, (apiErr, apiRes) => {
@@ -109,7 +104,7 @@ givenNoParam = (result) => {
         }
     });
 }
-
+// API call to get crypto rate in USD 
 getCurrentRate = (tokens, result) => {
     console.log(tokens)
     let queryString;

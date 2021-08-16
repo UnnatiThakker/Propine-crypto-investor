@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS investor;
+
+USE investor;
+
+CREATE TABLE investor (
+    id INT NOT NULL AUTO_INCREMENT,
+    timestamp varchar(255) NOT NULL,
+    transaction_type varchar(20) NOT NULL,
+    token varchar(20) NOT NULL,
+    amount double NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE INDEX idx_timestamp ON investor (timestamp);

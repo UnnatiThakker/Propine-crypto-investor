@@ -24,7 +24,7 @@ Investor.findByToken = (token, next) => {
 Investor.findByDate = (date, next) => {
     let query = `SELECT token, (SUM(CASE WHEN transaction_type='DEPOSIT' THEN amount ELSE 0 END)
                 - SUM(CASE WHEN transaction_type='WITHDRAWAL' THEN amount ELSE 0 END)) as portfolio FROM 
-                investor WHERE cast(timestamp as date) = '${date}' GROUP BY token`;
+                investor WHERE DATE_FORMAT(FROM_UNIXTIME(timestamp/1000), '%Y-%m-%d') = '${date}' GROUP BY token`;
     runQuery(query, (error, res) => {
         next(error, res);
     });
@@ -33,7 +33,7 @@ Investor.findByDate = (date, next) => {
 Investor.findByTokenNDate = (token, date, next) => {
     let query = `SELECT (SUM(CASE WHEN transaction_type='DEPOSIT' THEN amount ELSE 0 END)
                 - SUM(CASE WHEN transaction_type='WITHDRAWAL' THEN amount ELSE 0 END)) as portfolio FROM 
-                investor WHERE cast(timestamp as date) = '${date}' AND token = '${token}'`;
+                investor WHERE DATE_FORMAT(FROM_UNIXTIME(timestamp/1000), '%Y-%m-%d') = '${date}' AND token = '${token}'`;
     runQuery(query, (error, res) => {
         next(error, res[0]);
     });

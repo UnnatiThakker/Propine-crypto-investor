@@ -36,6 +36,12 @@ Once you have imported data into the system you can query them using below optio
 * `node main.js --date=\`${yyyy-mm-dd}\`` will find portfolio for given date group by tokens
 * *node main.js --token=\`${token_name} \` --date=\`${yyyy-mm-dd}\`* will find portfolio for a given date and token
 
+## Simple flow diagram 
 
 ![flowchart](https://user-images.githubusercontent.com/6748244/129595784-2347671f-6919-4be4-ab03-754518523d64.png)
 
+# Future Enhancements
+
+* Create a script to import data from CSV file. We can also automate script if this is a continuous task.
+* Instead of downloading script from cloud to the syatem and then import data to database, we can directly import data from cloud platforms.
+* We can implement caching mechanism to improve performance. While caching we need to ensure we are just caching amount before conversion as exchange rate may change in fraction of seconds.

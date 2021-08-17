@@ -95,7 +95,7 @@ givenNoParam = (next) => {
     Investor.findPortfolio((err, res) => {
         if(err){
             next(err);
-        } else{
+        } else if(res.length){
             let tokens = res.map((obj) => obj.token);
             getCurrentRate(tokens, (apiErr, apiRes) => {
                 if(apiErr){
@@ -108,6 +108,8 @@ givenNoParam = (next) => {
                     next(null, res);
                 }
             });
+        } else {
+            next(new Error("No data not found"));
         }
     });
 }

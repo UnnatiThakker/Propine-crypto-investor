@@ -4,7 +4,7 @@ USE investor;
 
 CREATE TABLE investor (
     id INT NOT NULL AUTO_INCREMENT,
-    timestamp varchar(255) NOT NULL,
+    timestamp BIGINT NOT NULL,
     transaction_type varchar(20) NOT NULL,
     token varchar(20) NOT NULL,
     amount double NOT NULL,
